@@ -1,7 +1,7 @@
 // Custom cursor effect
 document.addEventListener('DOMContentLoaded', function() {
-    // Remove default cursor via class
-    document.body.classList.add('custom-cursor');
+    // Use default browser cursor as fallback
+    document.body.classList.remove('custom-cursor');
     
     // Create cursor elements
     const cursorGlow = document.createElement('div');
@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Make cursor visible when mouse moves
     document.addEventListener('mousemove', function() {
         cursorFollow.style.opacity = '1';
+        cursorGlow.style.opacity = '0.9';
     });
     
     // Increase cursor glow size when hovering clickable elements
@@ -61,21 +62,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
     clickableElements.forEach(element => {
         element.addEventListener('mouseenter', function() {
-            cursorGlow.style.width = '60px';
-            cursorGlow.style.height = '60px';
-            cursorGlow.style.background = 'radial-gradient(circle, rgba(255, 143, 48, 0.4) 0%, rgba(255, 143, 48, 0) 70%)';
-            cursorFollow.style.borderColor = 'rgba(255, 143, 48, 0.8)';
-            cursorFollow.style.width = '30px';
-            cursorFollow.style.height = '30px';
+            cursorGlow.style.width = '70px';
+            cursorGlow.style.height = '70px';
+            cursorGlow.style.background = 'radial-gradient(circle, rgba(255, 143, 48, 0.6) 0%, rgba(255, 143, 48, 0) 70%)';
+            cursorFollow.style.borderColor = 'rgba(255, 143, 48, 1)';
+            cursorFollow.style.backgroundColor = 'rgba(255, 143, 48, 0.3)';
+            cursorFollow.style.width = '35px';
+            cursorFollow.style.height = '35px';
         });
         
         element.addEventListener('mouseleave', function() {
-            cursorGlow.style.width = '40px';
-            cursorGlow.style.height = '40px';
-            cursorGlow.style.background = 'radial-gradient(circle, rgba(55, 199, 255, 0.4) 0%, rgba(55, 199, 255, 0) 70%)';
-            cursorFollow.style.borderColor = 'rgba(55, 199, 255, 0.8)';
-            cursorFollow.style.width = '20px';
-            cursorFollow.style.height = '20px';
+            cursorGlow.style.width = '50px';
+            cursorGlow.style.height = '50px';
+            cursorGlow.style.background = 'radial-gradient(circle, rgba(55, 199, 255, 0.5) 0%, rgba(55, 199, 255, 0) 70%)';
+            cursorFollow.style.borderColor = 'rgba(55, 199, 255, 0.9)';
+            cursorFollow.style.backgroundColor = 'rgba(55, 199, 255, 0.2)';
+            cursorFollow.style.width = '25px';
+            cursorFollow.style.height = '25px';
         });
     });
     

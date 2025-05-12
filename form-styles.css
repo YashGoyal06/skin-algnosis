@@ -21,6 +21,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    cursor: url('cursor.svg'), auto;
 }
 
 html {
@@ -33,6 +34,27 @@ body {
     color: var(--text-color);
     background-color: var(--background-color);
     position: relative;
+}
+
+/* Custom Cursor Styles */
+a, button, input[type="submit"], .submit-button, .color-label, .checkbox-option,
+input[type="checkbox"], input[type="radio"], select, 
+.step-icon, nav ul li a, .footer-links ul li a {
+    cursor: url('cursor-pointer.svg'), pointer;
+}
+
+/* Cursor Glow Effect */
+.cursor-glow {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    background: radial-gradient(circle, rgba(55, 199, 255, 0.4) 0%, rgba(55, 199, 255, 0) 70%);
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
 
 /* Preloader */

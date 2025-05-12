@@ -32,6 +32,119 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--background-color);
+    position: relative;
+}
+
+/* Preloader */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--dark-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dna-loader {
+    position: relative;
+    width: 100px;
+    height: 200px;
+}
+
+.dna-loader-strand {
+    position: absolute;
+    width: 2px;
+    height: 200px;
+    background-color: rgba(0, 80, 180, 0.3);
+    left: 30px;
+    transform: rotate(5deg);
+}
+
+.dna-loader-strand:nth-child(2) {
+    left: 70px;
+    transform: rotate(-5deg);
+}
+
+.dna-loader-rung {
+    position: absolute;
+    width: 40px;
+    height: 4px;
+    left: 30px;
+    background: linear-gradient(to right, #37c7ff, #ff8f30);
+    box-shadow: 0 0 10px rgba(55, 199, 255, 0.5);
+    transform-origin: center;
+    animation: dnaLoaderSpin 1.5s infinite ease-in-out;
+}
+
+.dna-loader-rung:nth-child(3) { top: 10%; animation-delay: -0.2s; }
+.dna-loader-rung:nth-child(4) { top: 20%; animation-delay: -0.4s; }
+.dna-loader-rung:nth-child(5) { top: 30%; animation-delay: -0.6s; }
+.dna-loader-rung:nth-child(6) { top: 40%; animation-delay: -0.8s; }
+.dna-loader-rung:nth-child(7) { top: 50%; animation-delay: -1.0s; }
+.dna-loader-rung:nth-child(8) { top: 60%; animation-delay: -1.2s; }
+.dna-loader-rung:nth-child(9) { top: 70%; animation-delay: -1.4s; }
+.dna-loader-rung:nth-child(10) { top: 80%; animation-delay: -1.6s; }
+.dna-loader-rung:nth-child(11) { top: 90%; animation-delay: -1.8s; }
+
+@keyframes dnaLoaderSpin {
+    0%, 100% {
+        transform: rotate(0deg) scaleX(1);
+    }
+    50% {
+        transform: rotate(180deg) scaleX(0.6);
+    }
+}
+
+.loader-text {
+    position: absolute;
+    bottom: -40px;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    font-weight: 300;
+    letter-spacing: 2px;
+    animation: loaderTextPulse 1.5s infinite;
+}
+
+@keyframes loaderTextPulse {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.preloader-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(55, 199, 255, 0.4) 0%, transparent 10%),
+        radial-gradient(circle at 70% 60%, rgba(255, 143, 48, 0.4) 0%, transparent 10%),
+        radial-gradient(circle at 40% 80%, rgba(55, 199, 255, 0.4) 0%, transparent 10%),
+        radial-gradient(circle at 80% 40%, rgba(255, 143, 48, 0.4) 0%, transparent 10%);
+    opacity: 0.2;
+    filter: blur(2px);
+    animation: preloaderParticleFloat 5s ease-in-out infinite alternate;
+}
+
+@keyframes preloaderParticleFloat {
+    0% {
+        background-position: 0 0, 0 0, 0 0, 0 0;
+    }
+    100% {
+        background-position: 20px 20px, -20px 20px, 20px -20px, -20px -20px;
+    }
 }
 
 .container {

@@ -19,7 +19,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: url('cursor.svg'), auto;
+}
+
+.custom-cursor, .custom-cursor * {
+    cursor: none !important;
+}
+
+body:not(.custom-cursor) {
+    cursor: url('dna-cursor.svg'), auto;
 }
 
 html {
@@ -36,9 +43,16 @@ body {
 }
 
 /* Custom Cursor Styles */
-a, button, input[type="submit"], .cta-button, .feature-card, .testimonial-card, 
-.step-number, nav ul li a, .footer-links ul li a {
-    cursor: url('cursor-pointer.svg'), pointer;
+body:not(.custom-cursor) a, 
+body:not(.custom-cursor) button, 
+body:not(.custom-cursor) input[type="submit"], 
+body:not(.custom-cursor) .cta-button, 
+body:not(.custom-cursor) .feature-card, 
+body:not(.custom-cursor) .testimonial-card, 
+body:not(.custom-cursor) .step-number, 
+body:not(.custom-cursor) nav ul li a, 
+body:not(.custom-cursor) .footer-links ul li a {
+    cursor: url('dna-cursor-pointer.svg'), pointer;
 }
 
 /* Custom Cursor Effects */

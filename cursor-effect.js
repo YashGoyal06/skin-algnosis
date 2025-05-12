@@ -1,5 +1,8 @@
 // Custom cursor effect
 document.addEventListener('DOMContentLoaded', function() {
+    // Remove default cursor via class
+    document.body.classList.add('custom-cursor');
+    
     // Create cursor elements
     const cursorGlow = document.createElement('div');
     cursorGlow.classList.add('cursor-glow');

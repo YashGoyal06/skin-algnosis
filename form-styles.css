@@ -21,7 +21,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: url('cursor.svg'), auto;
+}
+
+.custom-cursor, .custom-cursor * {
+    cursor: none !important;
+}
+
+body:not(.custom-cursor) {
+    cursor: url('dna-cursor.svg'), auto;
 }
 
 html {
@@ -37,10 +44,19 @@ body {
 }
 
 /* Custom Cursor Styles */
-a, button, input[type="submit"], .submit-button, .color-label, .checkbox-option,
-input[type="checkbox"], input[type="radio"], select, 
-.step-icon, nav ul li a, .footer-links ul li a {
-    cursor: url('cursor-pointer.svg'), pointer;
+body:not(.custom-cursor) a, 
+body:not(.custom-cursor) button, 
+body:not(.custom-cursor) input[type="submit"], 
+body:not(.custom-cursor) .submit-button, 
+body:not(.custom-cursor) .color-label, 
+body:not(.custom-cursor) .checkbox-option,
+body:not(.custom-cursor) input[type="checkbox"], 
+body:not(.custom-cursor) input[type="radio"], 
+body:not(.custom-cursor) select, 
+body:not(.custom-cursor) .step-icon, 
+body:not(.custom-cursor) nav ul li a, 
+body:not(.custom-cursor) .footer-links ul li a {
+    cursor: url('dna-cursor-pointer.svg'), pointer;
 }
 
 /* Custom Cursor Effects */

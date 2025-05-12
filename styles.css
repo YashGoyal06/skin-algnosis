@@ -1,17 +1,18 @@
 /* Global Styles */
 :root {
-    --primary-color: #6e44ff;
-    --secondary-color: #5c33ff;
-    --accent-color: #ff44a1;
-    --background-color: #f9f9f9;
-    --dark-color: #333333;
-    --light-color: #ffffff;
-    --gray-color: #f0f0f0;
-    --text-color: #333333;
+    --primary-color: #7e54ff;
+    --secondary-color: #6c43ff;
+    --accent-color: #ff54b1;
+    --background-color: #121212;
+    --dark-color: #0a0a0a;
+    --light-color: #1e1e1e;
+    --gray-color: #2a2a2a;
+    --text-color: #e0e0e0;
     --base-a-color: #ff5e5e;  /* Red */
     --base-t-color: #5e9eff;  /* Blue */
     --base-g-color: #5eff7f;  /* Green */
     --base-c-color: #ffde5e;  /* Yellow */
+    --border-color: #333333;
 }
 
 * {
@@ -65,8 +66,8 @@ section {
 
 /* Header & Navigation */
 header {
-    background-color: var(--light-color);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--dark-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     position: fixed;
     top: 0;
     left: 0;
@@ -87,10 +88,12 @@ nav {
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--primary-color);
+    text-shadow: 0 0 8px rgba(126, 84, 255, 0.5);
 }
 
 .logo span {
     color: var(--accent-color);
+    text-shadow: 0 0 8px rgba(255, 84, 177, 0.5);
 }
 
 nav ul {
@@ -127,54 +130,92 @@ nav ul li a:hover:after {
 .hero {
     padding-top: 150px;
     min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
     display: flex;
     align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 70% 50%, rgba(126, 84, 255, 0.1) 0%, rgba(18, 18, 18, 0) 70%);
+    pointer-events: none;
 }
 
 .hero .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-direction: row-reverse; /* Reverse order: DNA left, content right */
     flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
 }
 
 .hero-content {
     flex: 1;
     min-width: 300px;
-    animation: fadeInLeft 1s ease-out;
+    animation: fadeInRight 1s ease-out;
+    padding-left: 50px;
+    text-align: right;
 }
 
 .hero-content h1 {
     font-size: 3rem;
     margin-bottom: 20px;
-    color: var(--dark-color);
+    color: var(--text-color);
+    text-shadow: 0 0 10px rgba(126, 84, 255, 0.3);
 }
 
 .hero-content p {
     font-size: 1.2rem;
-    color: #666;
+    color: #aaaaaa;
     margin-bottom: 30px;
 }
 
 .cta-button {
     display: inline-block;
     background: var(--primary-color);
-    color: var(--light-color);
+    color: #ffffff;
     padding: 15px 30px;
     border-radius: 50px;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(110, 68, 255, 0.3);
+    box-shadow: 0 0 20px rgba(126, 84, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+    pointer-events: none;
 }
 
 .cta-button:hover {
     background: var(--secondary-color);
-    color: var(--light-color);
+    color: #ffffff;
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(110, 68, 255, 0.4);
+    box-shadow: 0 0 30px rgba(126, 84, 255, 0.7);
+}
+
+.cta-button:hover::before {
+    left: 100%;
 }
 
 /* DNA Animation */
@@ -186,7 +227,7 @@ nav ul li a:hover:after {
     align-items: center;
     position: relative;
     height: 600px;
-    perspective: 1000px;
+    perspective: 1200px;
 }
 
 .dna-container {
@@ -194,7 +235,7 @@ nav ul li a:hover:after {
     height: 500px;
     position: relative;
     transform-style: preserve-3d;
-    animation: spinDNA 20s linear infinite;
+    animation: spinDNA 15s linear infinite;
 }
 
 .dna-strand {
@@ -211,16 +252,33 @@ nav ul li a:hover:after {
     transform-style: preserve-3d;
 }
 
+/* DNA Backbone */
+.dna-helix::before, .dna-helix::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 100%;
+    background: rgba(126, 84, 255, 0.3);
+    border-radius: 4px;
+    left: calc(50% - 79px);
+    transform-style: preserve-3d;
+    box-shadow: 0 0 15px rgba(126, 84, 255, 0.5);
+}
+
+.dna-helix::after {
+    left: calc(50% + 71px);
+}
+
 .rung {
     position: absolute;
     width: 150px;
-    height: 20px;
+    height: 15px;
     left: 50%;
     transform: translateX(-50%);
     transform-style: preserve-3d;
 }
 
-/* Position each rung along the height of the DNA */
+/* Position each rung along the height of the DNA with more realistic helix twist */
 .rung:nth-child(1) { top: 0%; transform: translateX(-50%) translateZ(75px) rotateY(0deg); }
 .rung:nth-child(2) { top: 5%; transform: translateX(-50%) translateZ(71px) rotateY(18deg); }
 .rung:nth-child(3) { top: 10%; transform: translateX(-50%) translateZ(61px) rotateY(36deg); }
@@ -242,50 +300,99 @@ nav ul li a:hover:after {
 .rung:nth-child(19) { top: 90%; transform: translateX(-50%) translateZ(61px) rotateY(324deg); }
 .rung:nth-child(20) { top: 95%; transform: translateX(-50%) translateZ(71px) rotateY(342deg); }
 
+/* Connect bases with a line */
+.rung::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    top: 8px;
+    left: 0;
+    z-index: -1;
+}
+
 .base {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     top: -5px;
+    transition: all 0.3s ease;
 }
 
 .base-a {
     background-color: var(--base-a-color);
     left: 0;
-    box-shadow: 0 0 10px rgba(255, 94, 94, 0.6);
+    box-shadow: 0 0 15px rgba(255, 94, 94, 0.8);
 }
 
 .base-t {
     background-color: var(--base-t-color);
     right: 0;
-    box-shadow: 0 0 10px rgba(94, 158, 255, 0.6);
+    box-shadow: 0 0 15px rgba(94, 158, 255, 0.8);
 }
 
 .base-g {
     background-color: var(--base-g-color);
     left: 0;
-    box-shadow: 0 0 10px rgba(94, 255, 127, 0.6);
+    box-shadow: 0 0 15px rgba(94, 255, 127, 0.8);
 }
 
 .base-c {
     background-color: var(--base-c-color);
     right: 0;
-    box-shadow: 0 0 10px rgba(255, 222, 94, 0.6);
+    box-shadow: 0 0 15px rgba(255, 222, 94, 0.8);
+}
+
+/* Molecular details for bases */
+.base::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 @keyframes spinDNA {
     0% {
-        transform: rotateY(0) rotateX(5deg);
+        transform: rotateY(0) rotateX(20deg);
     }
     100% {
-        transform: rotateY(360deg) rotateX(5deg);
+        transform: rotateY(360deg) rotateX(20deg);
     }
+}
+
+/* DNA glow effect */
+.dna-model::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(126, 84, 255, 0.2) 0%, transparent 70%);
+    pointer-events: none;
 }
 
 /* About Section */
 .about {
-    background-color: var(--light-color);
+    background-color: var(--dark-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.about::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 70%, rgba(126, 84, 255, 0.05) 0%, rgba(18, 18, 18, 0) 60%);
+    pointer-events: none;
 }
 
 .about h2 {
@@ -293,6 +400,7 @@ nav ul li a:hover:after {
     font-size: 2.5rem;
     margin-bottom: 50px;
     color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(126, 84, 255, 0.3);
 }
 
 .about-content {
@@ -300,6 +408,8 @@ nav ul li a:hover:after {
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
 }
 
 .about-text {
@@ -311,6 +421,7 @@ nav ul li a:hover:after {
 .about-text p {
     font-size: 1.1rem;
     margin-bottom: 20px;
+    color: #aaaaaa;
 }
 
 .about-image {
@@ -362,20 +473,36 @@ nav ul li a:hover:after {
         50% 90%
     );
     animation: pulseScale 4s ease-in-out infinite;
+    box-shadow: 0 0 30px rgba(126, 84, 255, 0.4);
 }
 
 @keyframes pulseScale {
     0%, 100% {
         transform: scale(1);
+        filter: hue-rotate(0deg);
     }
     50% {
         transform: scale(1.1);
+        filter: hue-rotate(30deg);
     }
 }
 
 /* Features Section */
 .features {
-    background-color: var(--gray-color);
+    background-color: var(--light-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.features::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 70% 30%, rgba(255, 84, 177, 0.05) 0%, rgba(18, 18, 18, 0) 60%);
+    pointer-events: none;
 }
 
 .features h2 {
@@ -383,6 +510,7 @@ nav ul li a:hover:after {
     font-size: 2.5rem;
     margin-bottom: 50px;
     color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(126, 84, 255, 0.3);
 }
 
 .feature-cards {
@@ -394,23 +522,25 @@ nav ul li a:hover:after {
 }
 
 .feature-card {
-    background-color: var(--light-color);
+    background-color: var(--dark-color);
     border-radius: 10px;
     padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     flex: 1;
     min-width: 250px;
     max-width: 350px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(126, 84, 255, 0.1);
 }
 
 .feature-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 15px 40px rgba(126, 84, 255, 0.2);
+    border-color: rgba(126, 84, 255, 0.3);
 }
 
 .feature-icon {
-    background-color: rgba(110, 68, 255, 0.1);
+    background-color: rgba(126, 84, 255, 0.1);
     width: 70px;
     height: 70px;
     border-radius: 50%;
@@ -418,27 +548,43 @@ nav ul li a:hover:after {
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(126, 84, 255, 0.2);
 }
 
 .feature-icon svg {
     width: 35px;
     height: 35px;
     color: var(--primary-color);
+    filter: drop-shadow(0 0 5px rgba(126, 84, 255, 0.5));
 }
 
 .feature-card h3 {
     font-size: 1.4rem;
     margin-bottom: 15px;
     color: var(--primary-color);
+    text-shadow: 0 0 5px rgba(126, 84, 255, 0.3);
 }
 
 .feature-card p {
-    color: #666;
+    color: #aaaaaa;
 }
 
 /* Process Section */
 .process {
-    background-color: var(--light-color);
+    background-color: var(--dark-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.process::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(126, 84, 255, 0.05) 0%, rgba(18, 18, 18, 0) 60%);
+    pointer-events: none;
 }
 
 .process h2 {
@@ -446,6 +592,7 @@ nav ul li a:hover:after {
     font-size: 2.5rem;
     margin-bottom: 50px;
     color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(126, 84, 255, 0.3);
 }
 
 .steps {
@@ -470,14 +617,15 @@ nav ul li a:hover:after {
     right: 0;
     width: 50%;
     height: 2px;
-    background-color: var(--primary-color);
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    box-shadow: 0 0 10px rgba(126, 84, 255, 0.5);
 }
 
 .step-number {
     width: 60px;
     height: 60px;
-    background-color: var(--primary-color);
-    color: var(--light-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: #ffffff;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -485,12 +633,42 @@ nav ul li a:hover:after {
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0 auto 20px;
+    box-shadow: 0 0 20px rgba(126, 84, 255, 0.4);
+    position: relative;
+    z-index: 2;
+}
+
+.step-number::before {
+    content: '';
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid rgba(126, 84, 255, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(0.95);
+        opacity: 0.7;
+    }
 }
 
 .step h3 {
     font-size: 1.4rem;
     margin-bottom: 15px;
-    color: var(--dark-color);
+    color: var(--text-color);
+    text-shadow: 0 0 5px rgba(126, 84, 255, 0.3);
 }
 
 .cta-center {
@@ -500,7 +678,20 @@ nav ul li a:hover:after {
 
 /* Testimonials Section */
 .testimonials {
-    background-color: var(--gray-color);
+    background-color: var(--light-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.testimonials::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 80% 50%, rgba(255, 84, 177, 0.05) 0%, rgba(18, 18, 18, 0) 60%);
+    pointer-events: none;
 }
 
 .testimonials h2 {
@@ -508,6 +699,7 @@ nav ul li a:hover:after {
     font-size: 2.5rem;
     margin-bottom: 50px;
     color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(126, 84, 255, 0.3);
 }
 
 .testimonial-cards {

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin-Lesion-Diagnosis</title>
+    <link rel="stylesheet" href="/static/form-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="/static/preloader.js"></script>
+    <script src="/static/cursor-effect.js"></script>
+    <script src="/static/form-handler.js" defer></script>
+    <link href="/static/logo.jpg" rel="shortcut icon">
+</head>
+<body>
+    <div class="preloader">
+        <div class="preloader-particles"></div>
+        <div class="dna-loader">
+            <div class="dna-loader-strand"></div>
+            <div class="dna-loader-strand"></div>
+            <div class="dna-loader-rung"></div>
+            <div class="dna-loader-rung"></div>
+            <div class="dna-loader-rung"></div>
+            <div class="dna-loader-rung"></div>
+            <div class="dna-loader-rung"></div>
+            <div class="dna-loader-rung"></div>
+            <div class="dna-loader-rung"></div>
+            <div class="dna-loader-rung"></div>
+            <div class="dna-loader-rung"></div>
+            <div class="loader-text">LOADING...</div>
+        </div>
+    </div>
+    <header>
+        <nav>
+            <div class="logo" style="color: beige;">SKIN <span style="color: #00ffff;">ALGNOSIS</span></div>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/features.html">Features</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="form-section">
+        <div class="container">
+            <div class="form-container">
+                <h1 style="color: white;">ENTER PATIENT DETAILS</h1>
+                <p class="intro-text">Fill out the form below for the diagnosis of your skin disease. Our AI will process your image and generate a predicted report for you.</p>
+                
+                <div class="form-wrapper">
+                    <form id="patient-form" action="/predict" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="gender">Gender</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="" disabled selected>Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group half">
+                                <label for="age">Age</label>
+                                <input type="number" id="age" name="age" placeholder="Enter your age" min="1" max="120" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group file-upload-group">
+                            <label for="image">Upload Image</label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png" required>
+                                <span class="file-upload-text">Choose Image</span>
+                                <span class="file-upload-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                </span>
+                            </div>
+                            <small class="warning">Warning: Please upload images in JPG, JPEG, or PNG format only. Maximum file size: 20MB.</small>
+                            <div class="upload-message" id="upload-message" style="display: none;"></div>
+                        </div>
+                        
+                        <div class="form-group consent-group">
+                            <input type="checkbox" id="consent" name="consent" required>
+                            <label for="consent">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="submit-button" id="submit-btn">Submit Details</button>
+                        </div>
+                    </form>
+
+                    <!-- Result Display Section -->
+                    <div class="result-section" id="result-section" style="display: none; margin-top: 30px;">
+                        <h2>Diagnosis Result</h2>
+                        <div id="result-content"></div>
+                    </div>
+
+                    <!-- Training History Plot -->
+                    {% if history_plot %}
+                    <div class="history-plot" style="margin-top: 30px; text-align: center;">
+                        <h2>Model Training History</h2>
+                        <img src="{{ history_plot }}" alt="Training History Plot" style="max-width: 100%; border-radius: 10px;">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="side-info">
+                <div class="info-card">
+                    <h2>How It Works</h2>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-icon">1</div>
+                            <div class="step-content">
+                                <h3>Submit Your Data</h3>
+                                <p>Fill out the form with your details and image.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-icon">2</div>
+                            <div class="step-content">
+                                <h3>AI Processing</h3>
+                                <p>Our AI model analyzes your image.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-icon">3</div>
+                            <div class="step-content">
+                                <h3>Receive Your Report</h3>
+                                <p>Get your diagnosis report on the website.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h2>Need Help?</h2>
+                    <p>If you have any questions or need assistance, our support team is here to help.</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <span>info.skinalgnosiss@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <span>7817833974</span>
+                            <span>7983595318</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">CODE<span>CATALYST</span></div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/features.html">Features</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Support</h3>
+                    <p>Email: info.skinalgnosiss@gmail.com</p>
+                    <p>Phone: 7817833974</p>
+                    <p>7983595318</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Skin Lesion Diagnosis. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

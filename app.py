@@ -2,12 +2,9 @@ from flask import Flask, render_template, request, jsonify
 import tensorflow as tf
 import numpy as np
 from PIL import Image
-import pickle
 import io
 import os
-import matplotlib.pyplot as plt
 import logging
-import socket
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -15,8 +12,8 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-MODEL_PATH = "D:\\CODEVERSE\\DNACreator\\skin_lesion_model.h5"
-HISTORY_PATH = "D:\\CODEVERSE\\DNACreator\\training_history.pkl"
+# Define model path relative to project root
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "skin_lesion_model.h5")
 
 # Load model
 try:
@@ -25,35 +22,6 @@ try:
 except Exception as e:
     logger.error("Failed to load model: %s", str(e))
     raise
-
-# Load training history for plotting
-if os.path.exists(HISTORY_PATH):
-    try:
-        with open(HISTORY_PATH, "rb") as f:
-            history_dict = pickle.load(f)
-        logger.info("Loaded training history from %s", HISTORY_PATH)
-    except Exception as e:
-        logger.error("Failed to load training history: %s", str(e))
-        history_dict = {}
-else:
-    logger.warning("Training history file %s not found", HISTORY_PATH)
-    history_dict = {}
-
-# Plot accuracy history
-if "accuracy" in history_dict and "val_accuracy" in history_dict:
-    try:
-        plt.plot(history_dict['accuracy'], label='Train Accuracy')
-        plt.plot(history_dict['val_accuracy'], label='Val Accuracy')
-        plt.xlabel('Epochs')
-        plt.ylabel('Accuracy')
-        plt.title('Training History')
-        plt.legend()
-        plt.grid(True)
-        plt.savefig("static/training_plot.png")
-        plt.close()
-        logger.info("Generated training history plot at static/training_plot.png")
-    except Exception as e:
-        logger.error("Failed to generate training plot: %s", str(e))
 
 IMG_SIZE = (224, 224)
 CONFIDENCE_THRESHOLD = 0.30
@@ -120,15 +88,7 @@ def predict():
         logger.error("Error processing image: %s", str(e))
         return jsonify({"error": f"Error processing image: {str(e)}"}), 500
 
-if __name__ == "__main__":
-    ports = [3000, 3001, 3002]  # Try these ports
-    for port in ports:
-        try:
-            logger.info("Attempting to start Flask application on port %d", port)
-            app.run(debug=True, port=port)
-            break
-        except socket.error as e:
-            logger.error("Port %d failed: %s", port, str(e))
-            if port == ports[-1]:
-                logger.error("All ports failed. Please free a port or check permissions.")
-                raise
+# Vercel serverless function handler
+def handler(event, context):
+    from serverless_wsgi import handle_request
+    return handle_request(app, event, context)

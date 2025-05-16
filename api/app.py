@@ -5,6 +5,7 @@ from PIL import Image
 import io
 import os
 import logging
+import requests
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -12,8 +13,24 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-# Define model path relative to project root
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "skin_lesion_model.h5")
+# URL to download the model from Google Drive
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1uYA2Ik96PX_dbSOl4Sm_4uLLJr08SFlz"
+MODEL_PATH = "/tmp/skin_lesion_model.h5"
+
+# Download the model if it doesn't exist
+if not os.path.exists(MODEL_PATH):
+    logger.info("Downloading model from %s", MODEL_URL)
+    try:
+        response = requests.get(MODEL_URL, stream=True)
+        response.raise_for_status()
+        with open(MODEL_PATH, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+        logger.info("Model downloaded successfully to %s", MODEL_PATH)
+    except Exception as e:
+        logger.error("Failed to download model: %s", str(e))
+        raise
 
 # Load model
 try:
